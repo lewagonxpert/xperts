@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from google.cloud import storage
 import tensorflow as tf
-from X-Perts.params import BUCKET_NAME, BUCKET_TRAIN_X_PATH, BUCKET_TRAIN_y_PATH
+from XPerts.params import BUCKET_NAME, BUCKET_TRAIN_X_PATH, BUCKET_TRAIN_y_PATH
 
 #get data from GCP
 def get_X_from_gcp():
