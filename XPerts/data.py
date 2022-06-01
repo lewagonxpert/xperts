@@ -26,3 +26,7 @@ def get_y_from_gcp():
     y_cat = tf.keras.utilsto_categorical(y, num_classes=44)
     y_cat = tf.convert_to_tensor(y_cat)
     return y_cat
+
+if __name__ == '__main__':
+    X = get_X_from_gcp()
+    y_cat = get_y_from_gcp()
