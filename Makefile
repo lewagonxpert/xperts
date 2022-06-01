@@ -41,6 +41,8 @@ count_lines:
         '{printf "%4s %s\n", $$1, $$2}{s+=$$0}END{print s}'
 	@echo ''
 
+download_data_from_gcp:
+	@gsutil -u x-perts cp gs://x-perts-907/data/X ../hbaloochi/X-Perts/XPerts/data
 # ----------------------------------
 #      UPLOAD PACKAGE TO PYPI
 # ----------------------------------
