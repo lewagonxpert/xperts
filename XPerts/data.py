@@ -55,7 +55,7 @@ def y_to_tensor():
     return y_cat
 
 if __name__ == '__main__':
-    get_X_from_gcp() = []
+    [] =get_X_from_gcp()
     X = X_to_tensor()
     y_cat = y_to_tensor()
     print(y_cat)
