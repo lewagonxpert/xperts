@@ -9,6 +9,7 @@ numpy
 pandas
 scikit-learn
 
+
 # tests/linter
 black
 coverage
@@ -29,3 +30,5 @@ memoized-property
 termcolor
 gsutil
 python-dotenv
+uvicorn
+fastapi

@@ -55,7 +55,7 @@ pypi_test:
 
 pypi:
 	@twine upload dist/* -u $(PYPI_USERNAME)
-    
+
 
 
 
@@ -101,7 +101,7 @@ upload_data:
 
 ### GCP Storage - - - - - - - - - - - - - - - - - - - - - -
 
-# BUCKET_NAME=x-perts-907
+BUCKET_NAME=x-perts-907
 
 ##### Data  - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -136,8 +136,8 @@ RUNTIME_VERSION=2.2
 # JOB_NAME=taxi_fare_training_pipeline_$(shell date +'%Y%m%d_%H%M%S')
 
 
-# run_locally:
-# 	@python -m ${PACKAGE_NAME}.${FILENAME}
+run_locally:
+	@python -m ${PACKAGE_NAME}.${FILENAME}
 
 gcp_submit_training:
 	gcloud ai-platform jobs submit training ${JOB_NAME} \
@@ -154,4 +154,3 @@ gcp_submit_training:
 
 run_api:
 	uvicorn api.fast:app --reload  # load web server with code autoreload
-
