@@ -24,6 +24,7 @@ def get_X_from_gcp():
     for i in num:
         blob = bucket.blob(f'{BUCKET_TRAIN_X_PATH}/{i}.jpg')
         img = blob.download_to_filename(f'{data_path}/{i}.jpg')
+    return []
 
 
 def X_to_tensor():
@@ -54,6 +55,7 @@ def y_to_tensor():
     return y_cat
 
 if __name__ == '__main__':
+    get_X_from_gcp() = []
     X = X_to_tensor()
     y_cat = y_to_tensor()
     print(y_cat)
