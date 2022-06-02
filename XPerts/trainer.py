@@ -45,9 +45,9 @@ class Trainer(object):
 
 
 if __name__ == "__main__":
-    #get_X_from_gcp()
+    get_X_from_gcp()
     X = X_to_tensor()
-    #get_y_from_gcp()
+    get_y_from_gcp()
     y_cat = y_to_tensor()
     X_train =X[:479]
     X_test = X[479:]
