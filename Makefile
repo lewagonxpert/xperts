@@ -120,7 +120,7 @@ BUCKET_TRAINING_FOLDER = 'trainings'
 
 ##### Machine configuration - - - - - - - - - - - - - - - -
 
-# REGION=europe-west1
+REGION=europe-west4
 
 PYTHON_VERSION=3.7
 FRAMEWORK=scikit-learn
@@ -128,12 +128,12 @@ RUNTIME_VERSION=2.2
 
 ##### Package params  - - - - - - - - - - - - - - - - - - -
 
-# PACKAGE_NAME=TaxiFareModel
-# FILENAME=trainer
+PACKAGE_NAME=XPerts
+FILENAME=trainer
 
 ##### Job - - - - - - - - - - - - - - - - - - - - - - - - -
 
-# JOB_NAME=taxi_fare_training_pipeline_$(shell date +'%Y%m%d_%H%M%S')
+JOB_NAME=xperts_$(shell date +'%Y%m%d_%H%M%S')
 
 
 run_locally:

@@ -32,4 +32,5 @@ gsutil
 python-dotenv
 uvicorn
 fastapi
-
+Pillow
+requires.io

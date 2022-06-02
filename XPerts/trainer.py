@@ -1,12 +1,12 @@
 import joblib
 from google.cloud import storage
+
 from XPerts.data import get_X_from_gcp, get_y_from_gcp,X_to_tensor,y_to_tensor
 from XPerts.params import BUCKET_NAME, BUCKET_TRAIN_X_PATH,BUCKET_TRAIN_y_PATH
 
 import tensorflow as tf
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Reshape
-from sklearn.model_selection import train_test_split
+from tensorflow.keras.layers import Dense
 
 import pandas as pd
 import numpy as np
@@ -35,22 +35,23 @@ class Trainer(object):
         return self
 
     def fit_model(self):
-        self.model.fit(self.X,self.y,epochs=6,batch_size=64,verbose =1)
+        self.model.fit(self.X,self.y,epochs=1,batch_size=32)
         return self
 
-    def evaluate(self, X_test):
-        self.model.predict(X_test)
+    def evaluate(self, X_test, y_test):
+        self.model.evaluate(X_test, y_test)
         return self
+
 
     def save_model_locally(self):
         joblib.dump(self.model, 'model.joblib')
 
 
 if __name__ == "__main__":
-    #get_X_from_gcp()
-    X = X_to_tensor()
-    #get_y_from_gcp()
-    y_cat = y_to_tensor()
+    res = get_X_from_gcp()
+    X = X_to_tensor(res)
+    y = get_y_from_gcp()
+    y_cat = y_to_tensor(y)
     X_train =X[:479]
     X_test = X[479:]
     y_train =y_cat[:479]
@@ -58,5 +59,6 @@ if __name__ == "__main__":
     trainer = Trainer(X_train, y_train)
     trainer = trainer.initialize_model()
     trainer = trainer.fit_model()
-    print(trainer.evaluate(X_test))
+    trainer.evaluate(X_test, y_test)
+
     trainer.save_model_locally()
