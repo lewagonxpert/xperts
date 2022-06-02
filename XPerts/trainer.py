@@ -23,8 +23,10 @@ class Trainer(object):
         self.model = Sequential()
         self.model.add(tf.keras.layers.Conv2D(16, (3,3), activation='relu',input_shape=(940,2041,3)))
         self.model.add(tf.keras.layers.MaxPool2D(pool_size=(4,4)))
-        self.model.add(tf.keras.layers.MaxPool2D(pool_size=(4,4)))
-        self.model.add(tf.keras.layers.MaxPool2D(pool_size=(4,4)))
+        self.model.add(tf.keras.layers.Conv2D(8, (2,2),activation='relu'))
+        self.model.add(tf.keras.layers.MaxPool2D(pool_size=(3,3)))
+        self.model.add(tf.keras.layers.Conv2D(4, (2,2),activation='relu'))
+        self.model.add(tf.keras.layers.MaxPool2D(pool_size=(2,2)))
         self.model.add(tf.keras.layers.Flatten())
         self.model.add(Dense(44, activation='softmax'))
         self.model.compile(loss='categorical_crossentropy',
@@ -33,7 +35,7 @@ class Trainer(object):
         return self
 
     def fit_model(self):
-        self.model.fit(self.X,self.y,epochs=5,batch_size=32)
+        self.model.fit(self.X,self.y,epochs=6,batch_size=64,verbose =1)
         return self
 
     def evaluate(self, X_test):
@@ -45,9 +47,9 @@ class Trainer(object):
 
 
 if __name__ == "__main__":
-    get_X_from_gcp()
+    #get_X_from_gcp()
     X = X_to_tensor()
-    get_y_from_gcp()
+    #get_y_from_gcp()
     y_cat = y_to_tensor()
     X_train =X[:479]
     X_test = X[479:]
@@ -56,5 +58,5 @@ if __name__ == "__main__":
     trainer = Trainer(X_train, y_train)
     trainer = trainer.initialize_model()
     trainer = trainer.fit_model()
-    trainer.evaluate(X_test)
+    print(trainer.evaluate(X_test))
     trainer.save_model_locally()
