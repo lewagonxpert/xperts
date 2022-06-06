@@ -8,4 +8,7 @@ raw_data/
 .env
 XPerts/data
 *.jpg
+<<<<<<< HEAD
 *.ipynb
+=======
+>>>>>>> 8694bf2b95a2e5ff301144849aeec16b3610b170

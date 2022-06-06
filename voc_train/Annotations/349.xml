@@ -1,0 +1,48 @@
+<annotation verified="yes">
+    <folder>Annotation</folder>
+    <filename>349.jpg</filename>
+    <path>xpert-real--PascalVOC-export/Annotations/349.jpg</path>
+    <source>
+        <database>Unknown</database>
+    </source>
+    <size>
+        <width>2041</width>
+        <height>940</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+    <name>cavity</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+        <xmin>386.776218289176</xmin>
+        <ymin>429.82028813566063</ymin>
+        <xmax>426.5632614807872</xmax>
+        <ymax>480.36202797821727</ymax>
+    </bndbox>
+</object><object>
+    <name>cavity</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+        <xmin>1473.2691892357552</xmin>
+        <ymin>455.856901273708</ymin>
+        <xmax>1532.9498123984083</xmax>
+        <ymax>497.20925511750573</ymax>
+    </bndbox>
+</object><object>
+    <name>cavity</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+        <xmin>461.75950097724893</xmin>
+        <ymin>486.4882658358261</ymin>
+        <xmax>478.59252569311224</xmax>
+        <ymax>530.903767820774</ymax>
+    </bndbox>
+</object>
+</annotation>

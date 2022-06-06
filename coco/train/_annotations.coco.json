@@ -1,0 +1,101 @@
+{
+    "info": {
+        "year": "2022",
+        "version": "1",
+        "description": "Exported from roboflow.ai",
+        "contributor": "",
+        "url": "https://public.roboflow.ai/object-detection/undefined",
+        "date_created": "2022-06-01T12:56:30+00:00"
+    },
+    "licenses": [
+        {
+            "id": 1,
+            "url": "https://creativecommons.org/licenses/by/4.0/",
+            "name": "CC BY 4.0"
+        }
+    ],
+    "categories": [
+        {
+            "id": 0,
+            "name": "Pixels",
+            "supercategory": "none"
+        },
+        {
+            "id": 1,
+            "name": "cavity",
+            "supercategory": "Pixels"
+        }
+    ],
+    "images": [
+        {
+            "id": 0,
+            "license": 1,
+            "file_name": "582_jpg.rf.5ef57ad5758360bc66d974d182b1d63c.jpg",
+            "height": 940,
+            "width": 2041,
+            "date_captured": "2022-06-01T12:56:30+00:00"
+        },
+        {
+            "id": 1,
+            "license": 1,
+            "file_name": "340_jpg.rf.78cc505b455cce04cb2bc05d84c59f4d.jpg",
+            "height": 940,
+            "width": 2041,
+            "date_captured": "2022-06-01T12:56:30+00:00"
+        }
+    ],
+    "annotations": [
+        {
+            "id": 0,
+            "image_id": 0,
+            "category_id": 1,
+            "bbox": [
+                880,
+                571,
+                47.43851889241155,
+                39.820808985568355
+            ],
+            "area": 1889.040199372996,
+            "segmentation": [
+                [
+                    922.3713448121375,
+                    610.5453273672193,
+                    879.5236879901117,
+                    582.9771109462513,
+                    926.9622068825233,
+                    570.7245183816509,
+                    925.4318416920798,
+                    607.4822376507606
+                ]
+            ],
+            "iscrowd": 0
+        },
+        {
+            "id": 1,
+            "image_id": 1,
+            "category_id": 1,
+            "bbox": [
+                1167,
+                581,
+                48.96865058191044,
+                52.073343125477344
+            ],
+            "area": 2549.961344143428,
+            "segmentation": [
+                [
+                    1167.2148312226343,
+                    630.4557610723491,
+                    1167.2148312226343,
+                    630.4557610723491,
+                    1216.1834818045447,
+                    633.5188507888079,
+                    1216.1834818045447,
+                    581.4455076633305,
+                    1174.8661901729624,
+                    581.4455076633305
+                ]
+            ],
+            "iscrowd": 0
+        }
+    ]
+}
