@@ -36,7 +36,7 @@ class Trainer(object):
 
     def fit_model(self):
         es = EarlyStopping(patience=3, restore_best_weights=True)
-        self.model.fit(self.X,self.y, epochs=100, batch_size=32, validation_split=0.2 ,callbacks=[es])
+        self.model.fit(self.X,self.y, epochs=100, batch_size=64, validation_split=0.2 ,callbacks=[es])
         return self
 
     def evaluate(self, X_test, y_test):
@@ -62,10 +62,10 @@ if __name__ == "__main__":
     X = X_to_tensor(res)
     y = get_xml()
 
-    X_train =X[:200]
-    X_test = X[200:]
-    y_train =y[:200]
-    y_test = y[200:]
+    X_train =X[:957]
+    X_test = X[957:]
+    y_train =y[:957]
+    y_test = y[957:]
     trainer = Trainer(X_train, y_train)
     trainer = trainer.initialize_model()
     trainer = trainer.fit_model()
