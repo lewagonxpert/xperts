@@ -8,11 +8,11 @@ import tensorflow as tf
 from tensorflow.keras.applications import resnet50
 from tensorflow.keras.models import Sequential
 from tensorflow.keras import layers
+from tensorflow.keras.callbacks import EarlyStopping
 
 
 import pandas as pd
 import numpy as np
-
 
 
 
@@ -35,7 +35,8 @@ class Trainer(object):
         return self
 
     def fit_model(self):
-        self.model.fit(self.X,self.y,epochs=30,batch_size=32)
+        es = EarlyStopping(patience=3, restore_best_weights=True)
+        self.model.fit(self.X,self.y,epochs=30,batch_size=32, validation_split=0.2 ,callbacks=[es])
         return self
 
     def evaluate(self, X_test, y_test):
@@ -60,7 +61,6 @@ class Trainer(object):
 if __name__ == "__main__":
     res = get_X_from_gcp()
     X = X_to_tensor(res)
-    xml = get_y_from_gcp()
     y = get_y()
 
     X_train =X[:200]
@@ -71,4 +71,4 @@ if __name__ == "__main__":
     trainer = trainer.initialize_model()
     trainer = trainer.fit_model()
     trainer.evaluate(X_test, y_test)
-    trainer.save_model_to_gcp()
+    trainer.save_model_locally()
