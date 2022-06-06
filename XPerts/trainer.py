@@ -1,18 +1,18 @@
 import joblib
 from google.cloud import storage
 
-from XPerts.data import get_X_from_gcp, get_y_from_gcp,X_to_tensor,y_to_tensor
+from XPerts.data import get_X_from_gcp, get_y_from_gcp,X_to_tensor,get_y
 from XPerts.params import BUCKET_NAME, BUCKET_TRAIN_X_PATH,BUCKET_TRAIN_y_PATH
 
 import tensorflow as tf
+from tensorflow.keras.applications import resnet50
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense
-from tensorflow.keras import layers, models
+from tensorflow.keras import layers
+
 
 import pandas as pd
 import numpy as np
-from tensorflow.compat.v1 import ConfigProto
-from tensorflow.compat.v1 import InteractiveSession
+
 
 
 
@@ -24,32 +24,14 @@ class Trainer(object):
 
 
     def initialize_model(self):
-        model = tf.keras.applications.vgg16.VGG16(
-                                            include_top=False,
-                                            weights='imagenet',
-                                            input_shape=(940,2041,3),
-                                            classes=44,
-                                            classifier_activation='softmax'
-                                        )
+        model = resnet50.ResNet50(weights='imagenet', include_top=False, input_shape=(940, 2041, 3))
         model.trainable = False
-
-        base_model = model
         flatten_layer = layers.Flatten()
-        dense_layer = layers.Dense(500, activation='relu')
-        prediction_layer = layers.Dense(44, activation='softmax')
+        prediction_layer = layers.Dense(30, activation='linear')
 
-
-        self.model = models.Sequential([
-            base_model,
-            flatten_layer,
-            dense_layer,
-            prediction_layer
-        ])
-
-
-        self.model.compile(loss='categorical_crossentropy',
-                           optimizer='adam',
-                           metrics=['accuracy'])
+        self.model = Sequential([model,flatten_layer,prediction_layer])
+        self.model.compile(loss='mse',
+                           optimizer='adam')
         return self
 
     def fit_model(self):
@@ -78,12 +60,13 @@ class Trainer(object):
 if __name__ == "__main__":
     res = get_X_from_gcp()
     X = X_to_tensor(res)
-    y = get_y_from_gcp()
-    y_cat = y_to_tensor(y)
-    X_train =X[:479]
-    X_test = X[479:]
-    y_train =y_cat[:479]
-    y_test = y_cat[479:]
+    xml = get_y_from_gcp()
+    y = get_y()
+
+    X_train =X[:200]
+    X_test = X[200:]
+    y_train =y[:200]
+    y_test = y[200:]
     trainer = Trainer(X_train, y_train)
     trainer = trainer.initialize_model()
     trainer = trainer.fit_model()

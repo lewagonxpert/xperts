@@ -10,7 +10,6 @@ from os import listdir
 from os.path import isfile, join
 import matplotlib.patches as ptc
 import xml.etree.ElementTree as ET
-import numpy as np
 
 
 def get_X_from_gcp():
