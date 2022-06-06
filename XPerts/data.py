@@ -59,9 +59,9 @@ def get_y_from_gcp():
     return xml
 
 
-def get_xml(xml):
+def get_xml():
 
-    tree = ET.parse(xml)
+    tree = ET.parse(get_y_from_gcp())
     root = tree.getroot()
 
     sample_annotations = []
@@ -101,5 +101,4 @@ def get_y():
 if __name__ == '__main__':
     res = get_X_from_gcp()
     X = X_to_tensor(res)
-    xml = get_y_from_gcp()
     y = get_y()
