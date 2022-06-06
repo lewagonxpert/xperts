@@ -124,7 +124,7 @@ REGION=europe-west4
 
 PYTHON_VERSION=3.7
 FRAMEWORK=scikit-learn
-RUNTIME_VERSION=2.2
+RUNTIME_VERSION=2.3
 
 ##### Package params  - - - - - - - - - - - - - - - - - - -
 
