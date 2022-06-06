@@ -21,8 +21,10 @@ yapf
 # API
 gcsfs
 google-cloud-storage
+google-cloud
 mlflow
 s3fs
+google-api-python-client
 
 # utilities
 six>=1.14
