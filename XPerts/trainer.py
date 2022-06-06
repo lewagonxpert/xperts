@@ -24,7 +24,7 @@ class Trainer(object):
 
 
     def initialize_model(self):
-        model = resnet50.ResNet50(weights='imagenet', include_top=False, input_shape=(940, 2041, 3))
+        model = resnet50.ResNet50(weights='imagenet', include_top=False, input_shape=(512, 512, 3))
         model.trainable = False
         flatten_layer = layers.Flatten()
         prediction_layer = layers.Dense(30, activation='linear')
@@ -70,5 +70,5 @@ if __name__ == "__main__":
     trainer = trainer.initialize_model()
     trainer = trainer.fit_model()
     trainer.evaluate(X_test, y_test)
-    trainer.save_model_locally()
+    # trainer.save_model_locally()
     trainer.save_model_to_gcp()
