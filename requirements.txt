@@ -34,3 +34,4 @@ uvicorn
 fastapi
 Pillow
 requires.io
+pycopy-xml.etree.ElementTree
