@@ -39,9 +39,9 @@ class Trainer(object):
         self.model.fit(self.X,self.y, epochs=100, batch_size=64, validation_split=0.2 ,callbacks=[es])
         return self
 
-    def evaluate(self, X_test, y_test):
-        self.model.evaluate(X_test, y_test)
-        return self
+    # def evaluate(self, X_test, y_test):
+    #     self.model.evaluate(X_test, y_test)
+    #     return self
 
 
     def save_model_locally(self):
@@ -69,6 +69,6 @@ if __name__ == "__main__":
     trainer = Trainer(X_train, y_train)
     trainer = trainer.initialize_model()
     trainer = trainer.fit_model()
-    trainer.evaluate(X_test, y_test)
+    # trainer.evaluate(X_test, y_test)
     # trainer.save_model_locally()
     trainer.save_model_to_gcp()
