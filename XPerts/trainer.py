@@ -62,10 +62,10 @@ if __name__ == "__main__":
     X = X_to_tensor(res)
     y = get_xml()
 
-    X_train =X[:957]
-    X_test = X[957:]
-    y_train =y[:957]
-    y_test = y[957:]
+    X_train =X[:1000]
+    X_test = X[1000:]
+    y_train =y[:1000]
+    y_test = y[1000:]
     trainer = Trainer(X_train, y_train)
     trainer = trainer.initialize_model()
     trainer = trainer.fit_model()

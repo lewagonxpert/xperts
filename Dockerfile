@@ -2,7 +2,7 @@ FROM python:3.8-buster
 
 COPY api /api
 COPY requirements.txt /requirements.txt
-COPY model.joblib /model.joblib
+COPY model.h5 /model.h5
 COPY XPerts /XPerts
 COPY MANIFEST.in /MANIFEST.in
 
