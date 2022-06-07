@@ -25,14 +25,15 @@ class Trainer(object):
 
 
     def initialize_model(self):
-        model = tf.keras.applications.vgg19.VGG19(weights='imagenet', include_top=False, input_shape=(512, 512, 3))
+        model = tf.keras.applications.vgg16.VGG16(weights='imagenet', include_top=False, input_shape=(512, 512, 3))
         model.trainable = False
         flatten_layer = layers.Flatten()
         dense_layer_1= layers.Dense(200,activation='relu')
         drop = layers.Dropout(0.3)
         dense_layer_2= layers.Dense(100,activation='relu')
+        dense_layer_3= layers.Dense(50,activation='relu')
         prediction_layer = layers.Dense(15, activation='linear')
-        self.model = Sequential([model,flatten_layer,dense_layer_1,drop,dense_layer_2,prediction_layer])
+        self.model = Sequential([model,flatten_layer,dense_layer_1,drop,dense_layer_2,dense_layer_3,prediction_layer])
         self.model.compile(loss='mse',
                            optimizer='Nadam')
         return self
