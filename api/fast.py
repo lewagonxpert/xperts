@@ -30,18 +30,25 @@ def index():
 
 @app.post('/image')
 async def _image_upload(my_image: bytes = File(...)):
-    return my_image
-
-
-
-@app.get("/predict")
-def predict():
-    my_image = _image_upload()
     image =[]
     img = Image.open(io.BytesIO(my_image))
+    print(img)
     image.append(np.expand_dims(np.asarray(img),axis=0))
+    print(image)
     X = tf.concat(image, 0)
-    return {'X': X }
+    print(X)
+    return {'X': type(img) }
+
+
+
+# @app.get("/predict")
+# def predict():
+#     my_image = _image_upload()
+#     image =[]
+#     img = Image.open(io.BytesIO(my_image))
+#     image.append(np.expand_dims(np.asarray(img),axis=0))
+#     X = tf.concat(image, 0)
+#     return {'X': type(X) }
 
 
 
