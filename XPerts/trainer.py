@@ -28,7 +28,7 @@ class Trainer(object):
         model.trainable = False
         flatten_layer = layers.Flatten()
         dense_layer= layers.Dense(100,activation='relu')
-        prediction_layer = layers.Dense(30, activation='linear')
+        prediction_layer = layers.Dense(15, activation='linear')
         self.model = Sequential([model,flatten_layer,dense_layer,prediction_layer])
         self.model.compile(loss='mse',
                            optimizer='adam')

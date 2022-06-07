@@ -31,5 +31,3 @@ def predict():
     blob = storage_client.blob(storage_location)
     model_gcs = blob.download_to_filename('model.h5')
     model = load_model(model_gcs)
-    if rm:
-        os.remove('model.h5')
