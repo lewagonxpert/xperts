@@ -31,7 +31,7 @@ class Trainer(object):
         prediction_layer = layers.Dense(15, activation='linear')
         self.model = Sequential([model,flatten_layer,dense_layer,prediction_layer])
         self.model.compile(loss='mse',
-                           optimizer='adam')
+                           optimizer='Nadam')
         return self
 
     def fit_model(self):
