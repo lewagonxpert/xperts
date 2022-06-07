@@ -19,13 +19,13 @@ import numpy as np
 
 class Trainer(object):
     def __init__(self, X, y):
-        self.X = tf.keras.applications.resnet50.preprocess_input(X)
+        self.X = tf.keras.applications.vgg19.VGG19.preprocess_input(X)
         self.y = y
         self.model = None
 
 
     def initialize_model(self):
-        model = resnet50.ResNet50(weights='imagenet', include_top=False, input_shape=(512, 512, 3))
+        model = tf.keras.applications.vgg19.VGG19(weights='imagenet', include_top=False, input_shape=(512, 512, 3))
         model.trainable = False
         flatten_layer = layers.Flatten()
         dense_layer_1= layers.Dense(200,activation='relu')
