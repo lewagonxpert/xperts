@@ -6,6 +6,11 @@ raw_data/
 *.csv
 **/__pycache__/
 .env
+<<<<<<< HEAD
 XPerts/data
 *.jpg
 x-perts-ae77c2035a30.json
+=======
+Untitled.ipynb
+*.jpg
+>>>>>>> master
