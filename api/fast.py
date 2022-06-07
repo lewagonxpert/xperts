@@ -34,18 +34,14 @@ async def _image_upload(my_image: bytes = File(...)):
     img = Image.open(io.BytesIO(my_image))
     image.append(np.expand_dims(np.asarray(img),axis=0))
     X = tf.concat(image, 0)
-    return {'X': type(img) }
+    print(X.shape)
+    return 'Hello'
 
 
 
-@app.get("/predict")
-def predict():
-    my_image = _image_upload()
-    image =[]
-    img = Image.open(io.BytesIO(my_image))
-    image.append(np.expand_dims(np.asarray(img),axis=0))
-    X = tf.concat(image, 0)
-    return {'X': type(X) }
+# @app.get("/predict")
+# def predict():
+
 
 
 
