@@ -27,9 +27,11 @@ class Trainer(object):
         model = resnet50.ResNet50(weights='imagenet', include_top=False, input_shape=(512, 512, 3))
         model.trainable = False
         flatten_layer = layers.Flatten()
-        dense_layer= layers.Dense(100,activation='relu')
+        dense_layer_1= layers.Dense(200,activation='relu')
+        drop = layers.Dropout(0.3)
+        dense_layer_2= layers.Dense(100,activation='relu')
         prediction_layer = layers.Dense(15, activation='linear')
-        self.model = Sequential([model,flatten_layer,dense_layer,prediction_layer])
+        self.model = Sequential([model,flatten_layer,dense_layer_1,drop,dense_layer_2,prediction_layer])
         self.model.compile(loss='mse',
                            optimizer='Nadam')
         return self
@@ -45,10 +47,10 @@ class Trainer(object):
 
 
     def save_model_locally(self):
-        self.model.save('model.pb')
+        self.model.save('model.h5')
 
     def save_model_to_gcp(self):
-        local_model_name = 'model.pb'
+        local_model_name = 'model.h5'
         self.model.save(local_model_name)
         client = storage.Client().bucket(BUCKET_NAME)
         storage_location = f"model/xperts/v1/{local_model_name}"
