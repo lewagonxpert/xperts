@@ -16,8 +16,7 @@ def download_model(bucket=BUCKET_NAME, rm=True):
     local_model_name = 'model.h5'
     storage_location = f'model/xperts/v1/{local_model_name}'
     blob = client.blob(storage_location)
-    blob.download_to_filename('model.h5')
-    model_gcs = h5py.File('model.h5', 'r')
+    model_gcs = blob.download_to_filename('model.h5')
     model = load_model(model_gcs)
     if rm:
         os.remove('model.h5')
