@@ -45,9 +45,9 @@ def predict():
     local_model_name = 'model.h5'
     storage_location = f'model/xperts/v1/{local_model_name}'
     blob = storage_client.blob(storage_location)
-    model_gcs = blob.download_to_filename('model.h5')
-    model = load_model(model_gcs)
-
+    model_gcs = blob.download_as_bytes('model.h5')
+    model = load_model(io.BytesIO(model_gcs))
+    print(type(model))
 
     X_p=tf.concat(image, 0)
     y_p=model.predict(X_p)
@@ -65,3 +65,8 @@ def predict():
             print(f'I Find {i}th cavity')
             img_bbox.regular_polygon(bounding_circle=(int(bbox[0]),int(bbox[1]),int(bbox[2])),n_sides=500, outline="red",)
     return {sample_image_annotated :'sample_image_annotated'}
+
+
+
+if __name__ == '__main__':
+    predict()
