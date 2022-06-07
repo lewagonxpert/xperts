@@ -45,10 +45,10 @@ class Trainer(object):
 
 
     def save_model_locally(self):
-        self.model.save('model.h5')
+        self.model.save('model.pb')
 
     def save_model_to_gcp(self):
-        local_model_name = 'model.h5'
+        local_model_name = 'model.pb'
         self.model.save(local_model_name)
         client = storage.Client().bucket(BUCKET_NAME)
         storage_location = f"model/xperts/v1/{local_model_name}"
