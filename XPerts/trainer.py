@@ -1,7 +1,7 @@
 import joblib
 from google.cloud import storage
 
-from XPerts.data import get_X_from_gcp, get_y_from_gcp,X_to_tensor,get_xml
+from XPerts.data import get_X_from_gcp,get_y_from_gcp,X_to_tensor,get_xml
 from XPerts.params import BUCKET_NAME, BUCKET_TRAIN_X_PATH,BUCKET_TRAIN_y_PATH
 
 import tensorflow as tf
@@ -35,8 +35,8 @@ class Trainer(object):
         return self
 
     def fit_model(self):
-        es = EarlyStopping(patience=3, restore_best_weights=True)
-        self.model.fit(self.X,self.y, epochs=100, batch_size=64, validation_split=0.2 ,callbacks=[es])
+        es = EarlyStopping(patience=5, restore_best_weights=True)
+        self.model.fit(self.X,self.y, epochs=100, batch_size=16, validation_split=0.2 ,callbacks=[es])
         return self
 
     # def evaluate(self, X_test, y_test):
@@ -54,6 +54,7 @@ class Trainer(object):
         storage_location = f"model/xperts/v1/{local_model_name}"
         blob = client.blob(storage_location)
         blob.upload_from_filename(local_model_name)
+
 
 
 
