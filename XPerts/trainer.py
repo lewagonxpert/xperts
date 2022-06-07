@@ -27,9 +27,9 @@ class Trainer(object):
         model = resnet50.ResNet50(weights='imagenet', include_top=False, input_shape=(512, 512, 3))
         model.trainable = False
         flatten_layer = layers.Flatten()
+        dense_layer= layers.Dense(100,activation='relu')
         prediction_layer = layers.Dense(30, activation='linear')
-
-        self.model = Sequential([model,flatten_layer,prediction_layer])
+        self.model = Sequential([model,flatten_layer,dense_layer,prediction_layer])
         self.model.compile(loss='mse',
                            optimizer='adam')
         return self

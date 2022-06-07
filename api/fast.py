@@ -1,10 +1,12 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-import pandas as pd
-from datetime import datetime
-import pytz
-#from predict import download_model
-import joblib
+import os
+from google.cloud import storage
+from keras.models import load_model
+import h5py
+from XPerts.params import BUCKET_NAME
+
+
 
 app = FastAPI()
 
@@ -20,3 +22,14 @@ app.add_middleware(
 def index():
     return {"greeting": "Hello world"}
 
+@app.get("/predict")
+def predict():
+    storage_client = storage.Client()
+    bucket = storage_client.get_bucket(BUCKET_NAME)
+    local_model_name = 'model.h5'
+    storage_location = f'model/xperts/v1/{local_model_name}'
+    blob = storage_client.blob(storage_location)
+    model_gcs = blob.download_to_filename('model.h5')
+    model = load_model(model_gcs)
+    if rm:
+        os.remove('model.h5')
