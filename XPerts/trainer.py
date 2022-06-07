@@ -6,6 +6,7 @@ from XPerts.params import BUCKET_NAME, BUCKET_TRAIN_X_PATH,BUCKET_TRAIN_y_PATH
 
 import tensorflow as tf
 from tensorflow.keras.applications import resnet50
+
 from tensorflow.keras.models import Sequential
 from tensorflow.keras import layers
 from tensorflow.keras.callbacks import EarlyStopping
@@ -18,7 +19,7 @@ import numpy as np
 
 class Trainer(object):
     def __init__(self, X, y):
-        self.X = X
+        self.X = tf.keras.applications.resnet50.preprocess_input(X)
         self.y = y
         self.model = None
 
