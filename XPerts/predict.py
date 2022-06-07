@@ -12,7 +12,7 @@ def get_model(path_to_joblib):
     model = load_model(path_to_joblib)
     return model
 
-def download_model(model_directory="model", bucket=BUCKET_NAME, rm=True):
+def download_model(bucket=BUCKET_NAME, rm=True):
     client = storage.Client().bucket(bucket)
     local_model_name = 'model.h5'
     storage_location = f'model/xperts/v1/{local_model_name}'
@@ -22,3 +22,6 @@ def download_model(model_directory="model", bucket=BUCKET_NAME, rm=True):
     if rm:
         os.remove('model.h5')
     return model
+
+def evaluate(model, X_test, y_test):
+    return model.evaluate(X_test, y_test)
