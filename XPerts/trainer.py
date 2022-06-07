@@ -24,7 +24,7 @@ class Trainer(object):
 
 
     def initialize_model(self):
-        model = resnet50.ResNet50(weights='imagenet', include_top=False, input_shape=(940, 2041, 3))
+        model = resnet50.ResNet50(weights='imagenet', include_top=False, input_shape=(512, 512, 3))
         model.trainable = False
         flatten_layer = layers.Flatten()
         prediction_layer = layers.Dense(30, activation='linear')
@@ -36,21 +36,20 @@ class Trainer(object):
 
     def fit_model(self):
         es = EarlyStopping(patience=3, restore_best_weights=True)
-        self.model.fit(self.X,self.y,epochs=3,batch_size=32, callbacks=[es])
+        self.model.fit(self.X,self.y, epochs=100, batch_size=64, validation_split=0.2 ,callbacks=[es])
         return self
 
-    def evaluate(self, X_test, y_test):
-        self.model.evaluate(X_test, y_test)
-        return self
+    # def evaluate(self, X_test, y_test):
+    #     self.model.evaluate(X_test, y_test)
+    #     return self
 
 
     def save_model_locally(self):
-        # joblib.dump(self.model, 'model.joblib')
-        self.model.save('my_model.h5')
+        self.model.save('model.h5')
 
     def save_model_to_gcp(self):
-        local_model_name = 'model.joblib'
-        joblib.dump(self.model, local_model_name)
+        local_model_name = 'model.h5'
+        self.model.save(local_model_name)
         client = storage.Client().bucket(BUCKET_NAME)
         storage_location = f"model/xperts/v1/{local_model_name}"
         blob = client.blob(storage_location)
@@ -63,13 +62,13 @@ if __name__ == "__main__":
     X = X_to_tensor(res)
     y = get_xml()
 
-    X_train =X[:200]
-    X_test = X[200:]
-    y_train =y[:200]
-    y_test = y[200:]
+    X_train =X[:1000]
+    X_test = X[1000:]
+    y_train =y[:1000]
+    y_test = y[1000:]
     trainer = Trainer(X_train, y_train)
     trainer = trainer.initialize_model()
     trainer = trainer.fit_model()
-    eval=trainer.evaluate(X_test, y_test)
-    # print(eval)
-    trainer.save_model_locally()
+    # trainer.evaluate(X_test, y_test)
+    # trainer.save_model_locally()
+    trainer.save_model_to_gcp()
