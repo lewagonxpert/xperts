@@ -76,11 +76,11 @@ def get_xml():
         y=np.array(y_train)
         y=y.flatten()
         shape=y.shape[0]
-        if shape<30:
-            pad_num=30-shape
+        if shape<15:
+            pad_num=15-shape
             y=np.pad(y,(0,pad_num))
-        elif shape>30:
-            y=y[:30]
+        elif shape>15:
+            y=y[:15]
         else:
             pass
         y_list.append(y)
