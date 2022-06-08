@@ -8,7 +8,7 @@ import tensorflow as tf
 from tensorflow.keras.applications import resnet50
 
 from tensorflow.keras.models import Sequential
-from tensorflow.keras import layers, Dense
+from tensorflow.keras import layers
 from tensorflow.keras.callbacks import EarlyStopping
 
 
@@ -53,7 +53,7 @@ class Trainer(object):
         self.model.add(tf.keras.layers.MaxPool2D(pool_size=(3,3)))
         self.model.add(tf.keras.layers.Flatten())
 
-        self.model.add(Dense(262144, activation='sigmoid'))
+        self.model.add(tf.keras.layers.Dense(262144, activation='sigmoid'))
         self.model.compile(loss='binary_crossentropy',
                     metrics=['accuracy'],
                     optimizer='adam'
