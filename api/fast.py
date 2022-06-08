@@ -37,7 +37,7 @@ def run_model(bytes):
     image_array = [np.expand_dims(np.asarray(image),axis=0)]
     X_p=tf.concat(image_array, 0)
     # Load our model
-    model = load_model('model.h5')
+    model = load_model('model_xperts_v2_model.h5')
     # Get results
     y_p=model.predict(X_p)
     y_p=y_p.reshape(5,3)

@@ -3,7 +3,7 @@ import numpy as np
 from google.cloud import storage
 import tensorflow as tf
 from XPerts.params import BUCKET_NAME, BUCKET_TRAIN_X_PATH,BUCKET_TRAIN_y_PATH
-from PIL import Image,ImageOps
+from PIL import Image
 import io
 import xml.etree.ElementTree as ET
 
@@ -13,7 +13,7 @@ def get_X_from_gcp():
     storage_client = storage.Client()
     bucket = storage_client.get_bucket(BUCKET_NAME)
 
-    image_id =[*range(1,1197)]
+    image_id =[*range(1,1429)]
 
     res = []
 
@@ -45,7 +45,7 @@ def convert_box_to_circle(s):
 def get_y_from_gcp():
     storage_client = storage.Client()
     bucket = storage_client.get_bucket(BUCKET_NAME)
-    image_id = [*range(1,1197)]
+    image_id = [*range(1,1429)]
     xml=[]
 
     for i in image_id:
@@ -76,11 +76,11 @@ def get_xml():
         y=np.array(y_train)
         y=y.flatten()
         shape=y.shape[0]
-        if shape<15:
-            pad_num=15-shape
+        if shape<9:
+            pad_num=9-shape
             y=np.pad(y,(0,pad_num))
-        elif shape>15:
-            y=y[:15]
+        elif shape>9:
+            y=y[:9]
         else:
             pass
         y_list.append(y)

@@ -19,7 +19,7 @@ import numpy as np
 
 class Trainer(object):
     def __init__(self, X, y):
-        self.X = X
+        self.X = resnet50.preprocess_input(X)
         self.y = y
         self.model = None
 
@@ -32,7 +32,7 @@ class Trainer(object):
         dense_layer_2= layers.Dense(128,activation='relu')
         dense_layer_3= layers.Dense(64,activation='relu')
         dense_layer_4= layers.Dense(32,activation='relu')
-        prediction_layer = layers.Dense(15, activation='linear')
+        prediction_layer = layers.Dense(9, activation='linear')
         self.model = Sequential([model,flatten_layer,
                                  dense_layer_1,
                                  dense_layer_2,
@@ -41,7 +41,8 @@ class Trainer(object):
                                  prediction_layer])
         nadam_opt = tf.keras.optimizers.Nadam(learning_rate=0.001)
         self.model.compile(loss='mse',
-                           optimizer=nadam_opt)
+                           optimizer=nadam_opt,
+                           metrics=['accuracy'])
         return self
 
     def fit_model(self):
@@ -58,7 +59,7 @@ class Trainer(object):
         local_model_name = 'model.h5'
         self.model.save(local_model_name)
         client = storage.Client().bucket(BUCKET_NAME)
-        storage_location = f"model/xperts/v4/{local_model_name}"
+        storage_location = f"model/xperts/v3/{local_model_name}"
         blob = client.blob(storage_location)
         blob.upload_from_filename(local_model_name)
 
