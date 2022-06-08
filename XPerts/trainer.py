@@ -25,38 +25,37 @@ class Trainer(object):
 
 
     def initialize_model(self):
-        # model = tf.keras.applications.vgg19.VGG19(weights='imagenet', include_top=False, input_shape=(512, 512, 3))
-        # model.trainable = False
-        # flatten_layer = layers.Flatten()
-        # dense_layer_1= layers.Dense(200,activation='relu')
+        model = tf.keras.applications.vgg19.VGG19(weights='imagenet', include_top=False, input_shape=(512, 512, 3))
+        model.trainable = False
+        flatten_layer = layers.Flatten()
+        dense_layer_1= layers.Dense(256,activation='relu')
         # drop = layers.Dropout(0.3)
-        # dense_layer_2= layers.Dense(100,activation='relu')
-        # dense_layer_3= layers.Dense(50,activation='relu')
-        # dense_layer_4= layers.Dense(25,activation='relu')
-        # prediction_layer = layers.Dense(15, activation='linear')
-        # self.model = Sequential([model,flatten_layer,
-        #                          drop,
-        #                          dense_layer_1,
-        #                          drop,dense_layer_2,
-        #                          dense_layer_3,
-        #                          dense_layer_4,
-        #                          prediction_layer])
-        # nadam_opt = tf.keras.optimizers.Nadam(learning_rate=0.001)
-        # self.model.compile(loss='mse',
-        #                    optimizer=nadam_opt)
-        self.model = Sequential()
-        self.model.add(tf.keras.layers.Conv2D(16, (4,4), activation='relu',input_shape=(512,512,1)))
-        self.model.add(tf.keras.layers.MaxPool2D(pool_size=(5,5)))
-        self.model.add(tf.keras.layers.Conv2D(8, (3,3),activation='relu'))
-        self.model.add(tf.keras.layers.MaxPool2D(pool_size=(4,4)))
-        self.model.add(tf.keras.layers.Conv2D(4, (3,3),activation='relu'))
-        self.model.add(tf.keras.layers.MaxPool2D(pool_size=(3,3)))
-        self.model.add(tf.keras.layers.Flatten())
-
-        self.model.add(tf.keras.layers.Dense(32768, activation='linear'))
+        dense_layer_2= layers.Dense(128,activation='relu')
+        dense_layer_3= layers.Dense(64,activation='relu')
+        dense_layer_4= layers.Dense(32,activation='relu')
+        prediction_layer = layers.Dense(15, activation='linear')
+        self.model = Sequential([model,flatten_layer,
+                                 dense_layer_1,
+                                 dense_layer_2,
+                                 dense_layer_3,
+                                 dense_layer_4,
+                                 prediction_layer])
+        nadam_opt = tf.keras.optimizers.Nadam(learning_rate=0.001)
         self.model.compile(loss='mse',
-                    optimizer='adam'
-                    )
+                           optimizer=nadam_opt)
+        # self.model = Sequential()
+        # self.model.add(tf.keras.layers.Conv2D(16, (4,4), activation='relu',input_shape=(512,512,1)))
+        # self.model.add(tf.keras.layers.MaxPool2D(pool_size=(5,5)))
+        # self.model.add(tf.keras.layers.Conv2D(8, (3,3),activation='relu'))
+        # self.model.add(tf.keras.layers.MaxPool2D(pool_size=(4,4)))
+        # self.model.add(tf.keras.layers.Conv2D(4, (3,3),activation='relu'))
+        # self.model.add(tf.keras.layers.MaxPool2D(pool_size=(3,3)))
+        # self.model.add(tf.keras.layers.Flatten())
+
+        # self.model.add(tf.keras.layers.Dense(32768, activation='linear'))
+        # self.model.compile(loss='mse',
+        #             optimizer='adam'
+                    # )
         return self
 
     def fit_model(self):

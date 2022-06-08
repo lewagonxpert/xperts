@@ -30,7 +30,7 @@ def X_to_tensor(res):
     image = []
     for i in res:
         img = Image.open(io.BytesIO(i))
-        img = ImageOps.grayscale(img)
+        # img = ImageOps.grayscale(img)
         image.append(np.expand_dims(np.asarray(img),axis=0))
     X = tf.concat(image, 0)
     return X
@@ -61,50 +61,48 @@ def get_xml():
     xml = get_y_from_gcp()
     sample_annotations = []
     y_train=[]
-    xmin=0
-    ymin=0
-    xmax=0
-    xmin=0
+    # xmin=0
+    # ymin=0
+    # xmax=0
+    # xmin=0
+    # for i in xml:
+    #     root = ET.fromstring(i)
+    #     for neighbor in root.iter('bndbox'):
+    #         xmin = int(float(neighbor.find('xmin').text))
+    #         ymin = int(float(neighbor.find('ymin').text))
+    #         xmax = int(float(neighbor.find('xmax').text))
+    #         ymax = int(float(neighbor.find('ymax').text))
+    #         sample_annotations.append([xmin, ymin, xmax, ymax])
+    # #         print(sample_annotations)
+    #     mask=np.zeros((512,512))
+    #     mask[xmin:xmax+1,ymin:ymax+1]=1
+    # #     print(mask[413:436, 247:268])
+    #     y_train.append(mask.flatten)
+    # #     y=np.array(y_train)
+    # y=mask.flatten()
     for i in xml:
         root = ET.fromstring(i)
         for neighbor in root.iter('bndbox'):
-            xmin = int(float(neighbor.find('xmin').text))
-            ymin = int(float(neighbor.find('ymin').text))
-            xmax = int(float(neighbor.find('xmax').text))
-            ymax = int(float(neighbor.find('ymax').text))
+            xmin = float(neighbor.find('xmin').text)
+            ymin = float(neighbor.find('ymin').text)
+            xmax = float(neighbor.find('xmax').text)
+            ymax = float(neighbor.find('ymax').text)
             sample_annotations.append([xmin, ymin, xmax, ymax])
-    #         print(sample_annotations)
-        mask=np.zeros((512,512))
-        mask[xmin:xmax+1,ymin:ymax+1]=1
-    #     print(mask[413:436, 247:268])
-        y_train.append(mask.flatten)
-    #     y=np.array(y_train)
-    y=mask.flatten()
+            p1,p2,r=convert_box_to_circle([xmin, ymin, xmax, ymax])
+            y_train.append([p1,p2,r])
 
-
-    #     sample_annotations = []
-    #     y_train=[]
-    #     for neighbor in root.iter('bndbox'):
-    #         xmin = float(neighbor.find('xmin').text)
-    #         ymin = float(neighbor.find('ymin').text)
-    #         xmax = float(neighbor.find('xmax').text)
-    #         ymax = float(neighbor.find('ymax').text)
-    #         sample_annotations.append([xmin, ymin, xmax, ymax])
-    #         p1,p2,r=convert_box_to_circle([xmin, ymin, xmax, ymax])
-    #         y_train.append([p1,p2,r])
-
-    #     y=np.array(y_train)
-    #     y=y.flatten()
-    #     shape=y.shape[0]
-    #     if shape<15:
-    #         pad_num=15-shape
-    #         y=np.pad(y,(0,pad_num))
-    #     elif shape>15:
-    #         y=y[:15]
-    #     else:
-    #         pass
-    #     y_list.append(y)
-    # y=np.array(y_list)
+        y=np.array(y_train)
+        y=y.flatten()
+        shape=y.shape[0]
+        if shape<15:
+            pad_num=15-shape
+            y=np.pad(y,(0,pad_num))
+        elif shape>15:
+            y=y[:15]
+        else:
+            pass
+        y_list.append(y)
+    y=np.array(y_list)
 
 
     return y
