@@ -32,7 +32,7 @@ class Trainer(object):
         dense_layer_2= layers.Dense(128,activation='relu')
         dense_layer_3= layers.Dense(64,activation='relu')
         dense_layer_4= layers.Dense(32,activation='relu')
-        prediction_layer = layers.Dense(9, activation='linear')
+        prediction_layer = layers.Dense(15, activation='linear')
         self.model = Sequential([model,flatten_layer,
                                  dense_layer_1,
                                  dense_layer_2,
