@@ -72,7 +72,7 @@ class Trainer(object):
         local_model_name = 'model.h5'
         self.model.save(local_model_name)
         client = storage.Client().bucket(BUCKET_NAME)
-        storage_location = f"model/xperts/v1/{local_model_name}"
+        storage_location = f"model/xperts/v2/{local_model_name}"
         blob = client.blob(storage_location)
         blob.upload_from_filename(local_model_name)
 
