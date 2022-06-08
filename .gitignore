@@ -9,4 +9,4 @@ raw_data/
 XPerts/data
 *.jpg
 x-perts-ae77c2035a30.json
-model.h5
+*.h5

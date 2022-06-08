@@ -3,9 +3,10 @@ import numpy as np
 from google.cloud import storage
 import tensorflow as tf
 from XPerts.params import BUCKET_NAME, BUCKET_TRAIN_X_PATH,BUCKET_TRAIN_y_PATH
-from PIL import Image
+from PIL import Image,ImageOps
 import io
 import xml.etree.ElementTree as ET
+
 
 
 def get_X_from_gcp():
@@ -55,12 +56,14 @@ def get_y_from_gcp():
 
 
 def get_xml():
+
     y_list=[]
     xml = get_y_from_gcp()
+    sample_annotations = []
+    y_train=[]
+
     for i in xml:
         root = ET.fromstring(i)
-        sample_annotations = []
-        y_train=[]
         for neighbor in root.iter('bndbox'):
             xmin = float(neighbor.find('xmin').text)
             ymin = float(neighbor.find('ymin').text)
