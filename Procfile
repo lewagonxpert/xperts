@@ -1,1 +1,1 @@
-web: pip install . -U && lewagonxperts-run
+web: pip install . -U && XPerts-run
