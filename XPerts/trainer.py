@@ -19,7 +19,7 @@ import numpy as np
 
 class Trainer(object):
     def __init__(self, X, y):
-        self.X = resnet50.preprocess_input(X)
+        self.X = X
         self.y = y
         self.model = None
 

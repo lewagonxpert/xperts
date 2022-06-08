@@ -3,7 +3,7 @@ import numpy as np
 from google.cloud import storage
 import tensorflow as tf
 from XPerts.params import BUCKET_NAME, BUCKET_TRAIN_X_PATH,BUCKET_TRAIN_y_PATH
-from PIL import Image
+from PIL import Image,ImageOps
 import io
 import xml.etree.ElementTree as ET
 from tensorflow.keras.preprocessing.image import load_img
@@ -29,7 +29,8 @@ def get_X_from_gcp():
 def X_to_tensor(res):
     image = []
     for i in res:
-        img = load_img(io.BytesIO(i),color_mode='grayscale')
+        img = Image.open(io.BytesIO(i))
+        img = ImageOps.grayscale(img)
         image.append(np.expand_dims(np.asarray(img),axis=0))
     X = tf.concat(image, 0)
     return X
