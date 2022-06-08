@@ -19,7 +19,7 @@ import numpy as np
 
 class Trainer(object):
     def __init__(self, X, y):
-        self.X = resnet50.preprocess_input(X)
+        self.X = X
         self.y = y
         self.model = None
 
@@ -58,7 +58,7 @@ class Trainer(object):
         local_model_name = 'model.h5'
         self.model.save(local_model_name)
         client = storage.Client().bucket(BUCKET_NAME)
-        storage_location = f"model/xperts/v3/{local_model_name}"
+        storage_location = f"model/xperts/v4/{local_model_name}"
         blob = client.blob(storage_location)
         blob.upload_from_filename(local_model_name)
 
