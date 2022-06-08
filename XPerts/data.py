@@ -6,7 +6,7 @@ from XPerts.params import BUCKET_NAME, BUCKET_TRAIN_X_PATH,BUCKET_TRAIN_y_PATH
 from PIL import Image,ImageOps
 import io
 import xml.etree.ElementTree as ET
-from tensorflow.keras.preprocessing.image import load_img
+
 
 
 def get_X_from_gcp():
@@ -30,7 +30,6 @@ def X_to_tensor(res):
     image = []
     for i in res:
         img = Image.open(io.BytesIO(i))
-        # img = ImageOps.grayscale(img)
         image.append(np.expand_dims(np.asarray(img),axis=0))
     X = tf.concat(image, 0)
     return X
@@ -57,29 +56,12 @@ def get_y_from_gcp():
 
 
 def get_xml():
+
     y_list=[]
     xml = get_y_from_gcp()
     sample_annotations = []
     y_train=[]
-    # xmin=0
-    # ymin=0
-    # xmax=0
-    # xmin=0
-    # for i in xml:
-    #     root = ET.fromstring(i)
-    #     for neighbor in root.iter('bndbox'):
-    #         xmin = int(float(neighbor.find('xmin').text))
-    #         ymin = int(float(neighbor.find('ymin').text))
-    #         xmax = int(float(neighbor.find('xmax').text))
-    #         ymax = int(float(neighbor.find('ymax').text))
-    #         sample_annotations.append([xmin, ymin, xmax, ymax])
-    # #         print(sample_annotations)
-    #     mask=np.zeros((512,512))
-    #     mask[xmin:xmax+1,ymin:ymax+1]=1
-    # #     print(mask[413:436, 247:268])
-    #     y_train.append(mask.flatten)
-    # #     y=np.array(y_train)
-    # y=mask.flatten()
+
     for i in xml:
         root = ET.fromstring(i)
         for neighbor in root.iter('bndbox'):
@@ -103,7 +85,6 @@ def get_xml():
             pass
         y_list.append(y)
     y=np.array(y_list)
-
 
     return y
 

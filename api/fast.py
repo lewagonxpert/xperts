@@ -2,9 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import io
 import numpy as np
-from google.cloud import storage
 from keras.models import load_model
-from XPerts.params import BUCKET_NAME
 from PIL import Image, ImageDraw
 from fastapi import FastAPI, File, UploadFile, Form, Request
 import tensorflow as tf

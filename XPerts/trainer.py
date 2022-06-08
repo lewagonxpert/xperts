@@ -29,7 +29,6 @@ class Trainer(object):
         model.trainable = False
         flatten_layer = layers.Flatten()
         dense_layer_1= layers.Dense(256,activation='relu')
-        # drop = layers.Dropout(0.3)
         dense_layer_2= layers.Dense(128,activation='relu')
         dense_layer_3= layers.Dense(64,activation='relu')
         dense_layer_4= layers.Dense(32,activation='relu')
@@ -43,23 +42,10 @@ class Trainer(object):
         nadam_opt = tf.keras.optimizers.Nadam(learning_rate=0.001)
         self.model.compile(loss='mse',
                            optimizer=nadam_opt)
-        # self.model = Sequential()
-        # self.model.add(tf.keras.layers.Conv2D(16, (4,4), activation='relu',input_shape=(512,512,1)))
-        # self.model.add(tf.keras.layers.MaxPool2D(pool_size=(5,5)))
-        # self.model.add(tf.keras.layers.Conv2D(8, (3,3),activation='relu'))
-        # self.model.add(tf.keras.layers.MaxPool2D(pool_size=(4,4)))
-        # self.model.add(tf.keras.layers.Conv2D(4, (3,3),activation='relu'))
-        # self.model.add(tf.keras.layers.MaxPool2D(pool_size=(3,3)))
-        # self.model.add(tf.keras.layers.Flatten())
-
-        # self.model.add(tf.keras.layers.Dense(32768, activation='linear'))
-        # self.model.compile(loss='mse',
-        #             optimizer='adam'
-                    # )
         return self
 
     def fit_model(self):
-        es = EarlyStopping(patience=5, restore_best_weights=True)
+        es = EarlyStopping(patience=3, restore_best_weights=True)
         self.model.fit(self.X,self.y, epochs=100, batch_size=8, validation_split=0.2 ,callbacks=[es])
         return self
 
@@ -72,7 +58,7 @@ class Trainer(object):
         local_model_name = 'model.h5'
         self.model.save(local_model_name)
         client = storage.Client().bucket(BUCKET_NAME)
-        storage_location = f"model/xperts/v2/{local_model_name}"
+        storage_location = f"model/xperts/v4/{local_model_name}"
         blob = client.blob(storage_location)
         blob.upload_from_filename(local_model_name)
 
@@ -83,12 +69,7 @@ if __name__ == "__main__":
     res = get_X_from_gcp()
     X = X_to_tensor(res)
     y = get_xml()
-
-    X_train =X[:1000]
-    X_test = X[1000:]
-    y_train =y[:1000]
-    y_test = y[1000:]
-    trainer = Trainer(X_train, y_train)
+    trainer = Trainer(X, y)
     trainer = trainer.initialize_model()
     trainer = trainer.fit_model()
     # trainer.save_model_locally()
