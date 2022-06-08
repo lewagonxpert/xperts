@@ -53,7 +53,7 @@ class Trainer(object):
         self.model.add(tf.keras.layers.MaxPool2D(pool_size=(3,3)))
         self.model.add(tf.keras.layers.Flatten())
 
-        self.model.add(tf.keras.layers.Dense(262144, activation='sigmoid'))
+        self.model.add(tf.keras.layers.Dense(1, activation='sigmoid'))
         self.model.compile(loss='binary_crossentropy',
                     metrics=['accuracy'],
                     optimizer='adam'
