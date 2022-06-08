@@ -28,7 +28,6 @@ class Trainer(object):
         model = tf.keras.applications.vgg16.VGG16(weights='imagenet', include_top=False, input_shape=(512, 512, 3))
         model.trainable = False
         flatten_layer = layers.Flatten()
-        dense_layer= layers.Dense(500,activation='relu')
         dense_layer_1= layers.Dense(200,activation='relu')
         drop = layers.Dropout(0.3)
         dense_layer_2= layers.Dense(100,activation='relu')
@@ -36,7 +35,6 @@ class Trainer(object):
         dense_layer_4= layers.Dense(25,activation='relu')
         prediction_layer = layers.Dense(15, activation='linear')
         self.model = Sequential([model,flatten_layer,
-                                 dense_layer,
                                  drop,
                                  dense_layer_1,
                                  drop,dense_layer_2,
@@ -50,7 +48,7 @@ class Trainer(object):
 
     def fit_model(self):
         es = EarlyStopping(patience=5, restore_best_weights=True)
-        self.model.fit(self.X,self.y, epochs=100, batch_size=16, validation_split=0.2 ,callbacks=[es])
+        self.model.fit(self.X,self.y, epochs=100, batch_size=8, validation_split=0.2 ,callbacks=[es])
         return self
 
 
