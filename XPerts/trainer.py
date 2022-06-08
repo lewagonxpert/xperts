@@ -46,7 +46,7 @@ class Trainer(object):
 
     def fit_model(self):
         es = EarlyStopping(patience=3, restore_best_weights=True)
-        self.model.fit(self.X,self.y, epochs=1, batch_size=8, validation_split=0.2 ,callbacks=[es])
+        self.model.fit(self.X,self.y, epochs=100, batch_size=8, validation_split=0.2 ,callbacks=[es])
         return self
 
 
