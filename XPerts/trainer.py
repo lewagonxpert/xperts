@@ -19,7 +19,7 @@ import numpy as np
 
 class Trainer(object):
     def __init__(self, X, y):
-        self.X = X
+        self.X = resnet50.preprocess_input(X)
         self.y = y
         self.model = None
 
@@ -32,10 +32,12 @@ class Trainer(object):
         drop = layers.Dropout(0.3)
         dense_layer_2= layers.Dense(100,activation='relu')
         dense_layer_3= layers.Dense(50,activation='relu')
+        dense_layer_4= layers.Dense(25,activation='relu')
         prediction_layer = layers.Dense(15, activation='linear')
-        self.model = Sequential([model,flatten_layer,dense_layer_1,drop,dense_layer_2,dense_layer_3,prediction_layer])
+        self.model = Sequential([model,flatten_layer,dense_layer_1,drop,dense_layer_2,dense_layer_3,dense_layer_4,prediction_layer])
+        nadam_opt = tf.keras.optimizers.Nadam(learning_rate=0.01)
         self.model.compile(loss='mse',
-                           optimizer='Nadam')
+                           optimizer=nadam_opt)
         return self
 
     def fit_model(self):
@@ -43,13 +45,10 @@ class Trainer(object):
         self.model.fit(self.X,self.y, epochs=100, batch_size=16, validation_split=0.2 ,callbacks=[es])
         return self
 
-    # def evaluate(self, X_test, y_test):
-    #     self.model.evaluate(X_test, y_test)
-    #     return self
-
 
     def save_model_locally(self):
         self.model.save('model.h5')
+
 
     def save_model_to_gcp(self):
         local_model_name = 'model.h5'
@@ -74,6 +73,5 @@ if __name__ == "__main__":
     trainer = Trainer(X_train, y_train)
     trainer = trainer.initialize_model()
     trainer = trainer.fit_model()
-    # trainer.evaluate(X_test, y_test)
     # trainer.save_model_locally()
     trainer.save_model_to_gcp()
