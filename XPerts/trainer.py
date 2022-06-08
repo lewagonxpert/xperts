@@ -41,13 +41,12 @@ class Trainer(object):
                                  prediction_layer])
         nadam_opt = tf.keras.optimizers.Nadam(learning_rate=0.001)
         self.model.compile(loss='mse',
-                           optimizer=nadam_opt,
-                           metrics=['accuracy'])
+                           optimizer=nadam_opt)
         return self
 
     def fit_model(self):
         es = EarlyStopping(patience=3, restore_best_weights=True)
-        self.model.fit(self.X,self.y, epochs=100, batch_size=8, validation_split=0.2 ,callbacks=[es])
+        self.model.fit(self.X,self.y, epochs=1, batch_size=8, validation_split=0.2 ,callbacks=[es])
         return self
 
 
