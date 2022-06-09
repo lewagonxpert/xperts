@@ -39,7 +39,9 @@ def run_model(bytes):
     image = Image.open(io.BytesIO(bytes))
     image_array = [np.expand_dims(np.asarray(image),axis=0)]
     X_p=tf.concat(image_array, 0)
-    # Load our model
+
+
+    # Load our model from GCP
     # client = storage.Client().bucket(BUCKET_NAME)
     # local_model_name = 'model.h5'
     # storage_location = f'model/xperts/v1/{local_model_name}'
@@ -48,6 +50,9 @@ def run_model(bytes):
     # f = io.BytesIO(model_gcs)
     # h = h5py.File(f,'r')
     # model = load_model(h)
+
+
+    # Load our model locally
     model = load_model('model.h5')
 
     # Get results
