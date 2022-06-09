@@ -10,8 +10,4 @@ XPerts/data
 *.jpg
 *.ipynb
 x-perts-ae77c2035a30.json
-<<<<<<< HEAD
-model.h5
-=======
->>>>>>> c17040fa0559496913ee8d66b734be66aaf73382
 *.h5
