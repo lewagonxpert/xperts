@@ -11,3 +11,4 @@ XPerts/data
 *.ipynb
 x-perts-ae77c2035a30.json
 model.h5
+*.h5

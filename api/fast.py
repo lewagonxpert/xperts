@@ -8,9 +8,15 @@ from keras.models import load_model
 import h5py
 from XPerts.params import BUCKET_NAME
 from PIL import Image, ImageDraw
-from tensorflow.keras.preprocessing.image import img_to_array
+from fastapi import FastAPI, File, UploadFile, Form, Request
 import tensorflow as tf
-from fastapi import FastAPI, File, UploadFile, Form
+import base64
+
+
+
+
+
+
 
 app = FastAPI()
 
@@ -28,51 +34,53 @@ def index():
 
 
 
-@app.post('/image')
-async def _image_upload(my_image: bytes = File(...)):
+
+@app.post("/image")
+async def check_image(request: Request):
+    request_body = await request.json()
+    image_b64_utf8 = request_body["image"]
+    return image_b64_utf8
+
+
+@app.post("/preproc")
+async def preproc(image_b64_utf8):
+    size=(512,512)
+    img_bytes = base64.b64decode(image_b64_utf8.encode('utf8'))
+
+    # # convert bytes data to PIL Image object
+    img = Image.open(io.BytesIO(img_bytes))
+    return img
+
+
+
+@app.get("/predict")
+def predict():
+    image_b64_utf8 = check_image()
+    my_image = preproc(image_b64_utf8)
     image =[]
-    img = Image.open(io.BytesIO(my_image))
+    img = Image.open(my_image)
     image.append(np.expand_dims(np.asarray(img),axis=0))
-    X = tf.concat(image, 0)
-    print(X.shape)
-    return 'Hello'
-
-
-
-# @app.get("/predict")
-# def predict():
-
-
-
-
-
-
 
     # storage_client = storage.Client()
-    # bucket = storage_client.get_bucket(BUCKET_NAME)
     # local_model_name = 'model.h5'
     # storage_location = f'model/xperts/v1/{local_model_name}'
     # blob = storage_client.blob(storage_location)
-    # model_gcs = blob.download_to_filename('model.h5')
-    # model = load_model(model_gcs)
+    # model_gcs = blob.download_as_bytes('model.h5')
+    # model = load_model(io.BytesIO(model_gcs))
 
 
-    # image_p=[]
-    # img = Image.open('./voc_train/JPEGImages/206.jpg')
-    # image_p.append(tf.expand_dims(img_to_array(img), axis=0))
-    # X_p=tf.concat(image_p, 0)
-    # # X_p_new=X_p[:,:,:,0]
-    # # X_p_new
-    # # X_p_new=tf.reshape(X_p_new,[1,940,2041,3])
-    # y_p=model.predict(X_p)
-    # y_p=y_p.reshape(10,3)
-    # sample_image_annotated = img.copy()
-    # img_bbox = ImageDraw.Draw(sample_image_annotated)
-    # i=0
-    # for bbox in y_p:
-    # #     print(bbox)
-    #     if bbox[0]>1 and bbox[1]>1 and bbox[2]>10:
-    #         i=i+1
-    #         print(f'I Find {i}th cavity')
-    #         img_bbox.regular_polygon(bounding_circle=(int(bbox[0]),int(bbox[1]),int(bbox[2])),n_sides=500, outline="red",)
-    # sample_image_annotated
+    model = load_model('model.h5')
+
+    X_p=tf.concat(image, 0)
+    y_p=model.predict(X_p)
+    y_p=y_p.reshape(5,3)
+
+
+    return {'y_p':y_p}
+
+
+
+
+
+# if __name__ == '__main__':
+#     predict()

@@ -1,0 +1,26 @@
+<annotation verified="yes">
+    <folder>Annotation</folder>
+    <filename>1.jpg</filename>
+    <path>xnewresize-PascalVOC-export/Annotations/1.jpg</path>
+    <source>
+        <database>Unknown</database>
+    </source>
+    <size>
+        <width>512</width>
+        <height>512</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+    <name>cavity</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+        <xmin>414.44522422316385</xmin>
+        <ymin>248.1898393361582</ymin>
+        <xmax>434.6938117937853</xmax>
+        <ymax>266.1242937853107</ymax>
+    </bndbox>
+</object>
+</annotation>
