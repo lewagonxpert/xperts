@@ -72,5 +72,4 @@ if __name__ == "__main__":
     trainer = Trainer(X, y)
     trainer = trainer.initialize_model()
     trainer = trainer.fit_model()
-    # trainer.save_model_locally()
     trainer.save_model_to_gcp()
